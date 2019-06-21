@@ -28,7 +28,7 @@ class Batiment
 
         return $this;
     }
-    public function add($nom)
+    public function add(Batiment $nom)
     {
         RequetesBat::insererBat($nom);
     }
