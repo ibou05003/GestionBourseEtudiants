@@ -19,6 +19,18 @@ class Database
     {
         self::$base = null;
     }
+    public static function executeSelect($select)
+    {
+        self::$base->exec('SET CHARACTER SET URF8');
+        $retour = self::$base->query($select);
+        return $retour;
+    }
+    public static function executeUpdate($requete, array $attribut)
+    {
+        self::$base->exec('SET CHARACTER SET URF8');
+        $retour = self::$base->prepare($requete);
+        $retour->execute($attribut);
+    }
 }
 //executeSelect()
 //executeUpdate()

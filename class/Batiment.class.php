@@ -11,7 +11,7 @@ class Batiment
     }
     /**
      * Get the value of nom
-     */ 
+     */
     public function getNom()
     {
         return $this->nom;
@@ -21,20 +21,30 @@ class Batiment
      * Set the value of nom
      *
      * @return  self
-     */ 
+     */
     public function setNom($nom)
     {
         $this->nom = $nom;
 
         return $this;
     }
-    public function add($nom){
+    public function add($nom)
+    {
         RequetesBat::insererBat($nom);
     }
-    public function lister(){
+    public function lister()
+    {
         RequetesBat::afficherBats();
     }
-    public static function afficheUnBatiment($id){
+    public static function afficheUnBatiment($id)
+    {
         RequetesBat::afficherUnBat($id);
     }
+    /*public static function getIdByNom($nom)
+    {
+        $req = 'SELECT idBat FROM batiment WHERE nomBat='.$nom;
+        $retour = Database::executeSelect($req);
+        while ($data = $retour->fetch())
+            echo $data['idBat'];
+    }*/
 }

@@ -49,10 +49,10 @@ class RequetesBat
             Database::$base->exec('SET CHARACTER SET URF8');
             $retour = Database::$base->prepare('SELECT nomBat FROM batiment WHERE idBat=?');
             $retour->execute(array($id));
-            while ($data = $retour->fetch()){
+            while ($data = $retour->fetch()) {
                 echo $data['nomBat'];
             }
-                
+
         } catch (PDOexception $e) {
             die($e->getMessage());
         }

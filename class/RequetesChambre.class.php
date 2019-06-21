@@ -3,7 +3,7 @@ require_once 'Autoloader.class.php';
 Autoloader::register();
 class RequetesChambre
 {
-    public static function insererChambre($nom, $id)
+    /*public static function insererChambre($nom, $id)
     {
         Database::connect();
         try
@@ -15,33 +15,27 @@ class RequetesChambre
             die($e->getMessage());
         }
         Database::deconnect();
-    }
-    public static function afficherChambres()
+    }*/
+    public static function afficherChambres($retour)
     {
-        Database::connect();
-        try
-        {
-            Database::$base->exec('SET CHARACTER SET URF8');
-            $retour = Database::$base->query('SELECT chambre.nomChambre,batiment.nomBat as bat FROM chambre LEFT JOIN batiment ON chambre.idBat=batiment.idBat');
-            $i = 1;
-            echo '<h1>LISTE DES CHAMBRES</h1>';
-            echo '<table>
-                    <thead>
-                        <th>#</th>
-                        <th>Nom</th>
-                        <th>Batiment</th>
-                    </thead>';
-            while ($data = $retour->fetch()) {
-                echo '<tr>';
-                echo '<td>' . $i . '</td>';
-                echo '<td>' . $data['nomChambre'] . '</td>';
-                echo '<td>' . $data['bat'] . '</td></tr>';
-                $i++;
-            }
-            echo '</7table>';
-        } catch (PDOexception $e) {
-            die($e->getMessage());
+        $i = 1;
+        echo '<h1>LISTE DES CHAMBRES</h1>';
+        echo '<table>
+                    <thead>';
+        Tableau::th('#');
+        Tableau::th('Numero');
+        Tableau::th('Nom');
+        Tableau::th('Batiment');
+        echo '</thead>';
+        while ($data = $retour->fetch()) {
+            echo '<tr>';
+            Tableau::td($i);
+            Tableau::td($data['num']);
+            Tableau::td($data['nomChambre']);
+            Tableau::td($data['bat']);
+            echo '</tr>';
+            $i++;
         }
-        Database::deconnect();
+        echo '</7table>';
     }
 }

@@ -4,16 +4,18 @@ Autoloader::register();
 class Chambre
 {
     private $nom;
+    private $num;
     private $batiment;
-    public function __construct($nom="")
+    public function __construct($nom = "", $num = "", $batiment = "")
     {
-        $this->nom=$nom;
+        $this->nom = $nom;
+        $this->num = $num;
+        $this->batiment = $batiment;
     }
-    
 
     /**
      * Get the value of nom
-     */ 
+     */
     public function getNom()
     {
         return $this->nom;
@@ -23,17 +25,66 @@ class Chambre
      * Set the value of nom
      *
      * @return  self
-     */ 
+     */
     public function setNom($nom)
     {
         $this->nom = $nom;
 
         return $this;
     }
-    public function add($nom,$id){
-        RequetesChambre::insererChambre($nom,$id);
+    /**
+     * Get the value of num
+     */
+    public function getNum()
+    {
+        return $this->num;
     }
-    public function lister(){
-        RequetesChambre::afficherChambres();
+
+    /**
+     * Set the value of num
+     *
+     * @return  self
+     */
+    public function setNum($num)
+    {
+        $this->num = $num;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of batiment
+     */
+    public function getBatiment()
+    {
+        return $this->batiment;
+    }
+
+    /**
+     * Set the value of batiment
+     *
+     * @return  self
+     */
+    public function setBatiment($batiment)
+    {
+        $this->batiment = $batiment;
+
+        return $this;
+    }
+    public function add(Chambre $chambre)
+    {
+        $req = 'INSERT INTO chambre (num,nomChambre,idBat) VALUES(?,?,?)';
+        $val = array($chambre->getNom(), $chambre->getNum(), $chambre->getBatiment());
+        Database::executeUpdate($req, $val);
+    }
+    public function lister()
+    {
+        try {
+            $req = 'SELECT chambre.num, chambre.nomChambre,batiment.nomBat as bat FROM chambre LEFT JOIN batiment ON chambre.idBat=batiment.idBat';
+            $retour = Database::executeSelect($req);
+            RequetesChambre::afficherChambres($retour);
+        } catch (PDOexception $e) {
+            die($e->getMessage());
+        }
     }
 }

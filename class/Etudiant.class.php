@@ -66,7 +66,8 @@ class Etudiant
     {
         $this->dateNaiss = $datNaissE;
     }
-    public function add($matE,$nomE,$prenomE,$mailE,$telE,$datNaissE){
-RequetesEtudiant::insererEtudiant($matE,$nomE,$prenomE,$mailE,$telE,$datNaissE);
-}
+    public function add($matE, $nomE, $prenomE, $mailE, $telE, $datNaissE)
+    {
+        RequetesEtudiant::insererEtudiant($matE, $nomE, $prenomE, $mailE, $telE, $datNaissE);
+    }
 }
