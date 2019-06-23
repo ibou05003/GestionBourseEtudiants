@@ -5,7 +5,7 @@ class RequetesBat
 {
     public static function insererBat(Batiment $nom)
     {
-        Database::connect();
+       // Database::connect();
         try
         {
             $req = 'INSERT INTO chambre (nomBat) VALUES(?)';
@@ -14,11 +14,11 @@ class RequetesBat
         } catch (PDOexception $e) {
             die($e->getMessage());
         }
-        Database::deconnect();
+        //Database::deconnect();
     }
     public static function afficherBats()
     {
-        Database::connect();
+        //Database::connect();
         try
         {
             Database::$base->exec('SET CHARACTER SET URF8');
@@ -40,11 +40,11 @@ class RequetesBat
         } catch (PDOexception $e) {
             die($e->getMessage());
         }
-        Database::deconnect();
+       // Database::deconnect();
     }
     public static function afficherUnBat($id)
     {
-        Database::connect();
+       // Database::connect();
         try
         {
             Database::$base->exec('SET CHARACTER SET URF8');
@@ -57,6 +57,6 @@ class RequetesBat
         } catch (PDOexception $e) {
             die($e->getMessage());
         }
-        Database::deconnect();
+        //Database::deconnect();
     }
 }

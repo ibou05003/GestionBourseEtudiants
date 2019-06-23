@@ -42,15 +42,9 @@ class RequetesEtudiant
         }
         return $id;
     }
-    // public static function trouveChhambre($num){
-    //     $req = 'SELECT * FROM typeBourse WHERE libelle=?';
-    //     $val=array($libelle);
-    //     $retour = Database::$base->prepare($req);
-    //     $retour->execute($val);
-    //     while ($row = $retour->fetch()) {
-    //         $id=$row['idType'];
-    //         break;
-    //     }
-    //     return $id;
-    // }
+
+    public static function genereMatricule($nom,$prenom,$id){
+        $ch=strtoupper(substr($nom,0,2)).strtoupper(substr($prenom,0,2))."-".$id;
+        return ch;
+    }
 }

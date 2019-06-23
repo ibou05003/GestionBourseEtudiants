@@ -1,5 +1,7 @@
 <?php
-    session_start();
+session_start();
+require_once 'class/Autoloader.class.php';
+Autoloader::register();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -13,7 +15,7 @@
     <title>Connexion</title>
 </head>
 <body>
- 
+
     <div class="container" onclick()>
       <div class="top">
       <div class="bottom">
@@ -26,32 +28,23 @@
           <h2> &nbsp </h2>;
           </div>
         </form>
-        </div>    
+        </div>
     </div>
     </div>
     <?php
-      if(isset($_POST['connexion'])){
-        $log=$_POST['login'];
-        $mdp=$_POST['password'];
-        //parcours
-        $trouve=false;
-        $ok=false;
-        $f=fopen("./files/user.csv","r");
-        $i=0;
-        while($tab=fgetcsv($f,1000,";"))
-        {
-            if($log==$tab[0] && $mdp==$tab[1]){
-                $trouve=true;
-                $_SESSION['login']=$tab[0];
-                $_SESSION['nom']=$tab[2];
-                $_SESSION['profil']=$tab[5];
-                header("location:./pages/acceuil.php");
-            }
-        }
-        fclose($f);
-        if($trouve==false)
-            echo "login ou passe incorrect";
+if (isset($_POST['connexion'])) {
+    $log = $_POST['login'];
+    $mdp = $_POST['password'];
+    //parcours
+    Database::connect();
+    $ok = User::connexion($log, $mdp);
+    if ($ok) {
+        header("location:./pages/acceuil.php");
+    }else{
+        echo "Login ou Mot de passe incorrect";
     }
+
+}
 ?>
     ?>
 </body>
