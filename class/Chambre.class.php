@@ -6,7 +6,7 @@ class Chambre
     private $nom;
     private $num;
     private $batiment;
-    public function __construct($nom = "", $num = "", $batiment = "")
+    public function __construct($num = "",$nom = "", $batiment = "")
     {
         $this->nom = $nom;
         $this->num = $num;
@@ -73,8 +73,9 @@ class Chambre
     }
     public function add(Chambre $chambre)
     {
+        Database::connect();
         $req = 'INSERT INTO chambre (num,nomChambre,idBat) VALUES(?,?,?)';
-        $val = array($chambre->getNom(), $chambre->getNum(), $chambre->getBatiment());
+        $val = array($chambre->getNum(), $chambre->getNom(), $chambre->getBatiment());
         Database::executeUpdate($req, $val);
     }
     public function lister()

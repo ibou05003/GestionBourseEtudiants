@@ -13,9 +13,22 @@ $et->lister();
 //$ret=Batiment::getIdByNom('a2');
 // $id=RequetesEtudiant::trouveType('Demi');
 // echo $id;
-$user=new User('admin','admin','Admin Principal',778083808,'fadia','administrateur');
-$user->add($user);
-$ok=User::connexion('admin','admin');
-if($ok){
-    echo $_SESSION['nom'];
-}
+// $user=new User('admin','admin','Admin Principal',778083808,'fadia','administrateur');
+// $user->add($user);
+// $ok=User::connexion('admin','admin');
+// if($ok){
+//     echo $_SESSION['nom'];
+// }
+// $i=RequetesEtudiant::recherche('ibra');
+// echo '<table>';
+// while($data=$i->fetch()){
+//     echo '<tr>';
+//     Tableau::td($data['matEtudiant']);
+//     Tableau::td($data['nomEtudiant']);
+//     Tableau::td($data['prenomEtudiant']);
+//     echo '</tr>';
+// }
+// echo '</table>';
+$recherche='ibra';
+$requete="SELECT * FROM etudiant WHERE matEtudiant LIKE '%$recherche%' OR nomEtudiant LIKE '%$recherche%' OR prenomEtudiant LIKE '%$recherche%' OR mailEtudiant LIKE '%$recherche%' OR telEtudiant LIKE '%$recherche%' OR naissEtudiant LIKE '%$recherche%' LIMIT ";
+RequetesEtudiant::afficheEtudiant($requete,'test.php','etudiant');

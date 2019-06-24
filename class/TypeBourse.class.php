@@ -27,5 +27,10 @@ class TypeBourse
     {
         $this->montant = $mt;
     }
-
+    public static function selectType(){
+        $req="SELECT * FROM typeBourse";
+        $retour=Database::executeSelect($req);
+        return $retour;
+    }
+    
 }

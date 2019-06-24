@@ -1,7 +1,7 @@
 <?php
 require_once 'Autoloader.class.php';
 Autoloader::register();
-class Etudiant
+abstract class Etudiant
 {
     private $matricule = null;
     private $nom = null;
@@ -23,9 +23,6 @@ class Etudiant
     {
         return $this->matricule;
     }
-    /*public function setMatricule($matE){
-    $this->matricule=$matE;
-    }*/
     public function getNom()
     {
         return $this->nom;
@@ -66,8 +63,5 @@ class Etudiant
     {
         $this->dateNaiss = $datNaissE;
     }
-    public function add($matE, $nomE, $prenomE, $mailE, $telE, $datNaissE)
-    {
-        RequetesEtudiant::insererEtudiant($matE, $nomE, $prenomE, $mailE, $telE, $datNaissE);
-    }
+   
 }

@@ -7,6 +7,6 @@ class Tableau
     }
     public static function th($par = "")
     {
-        echo '<th>' . $par . '</th>';
+        echo '<th scope="col">' . $par . '</th>';
     }
 }

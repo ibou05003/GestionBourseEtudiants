@@ -13,10 +13,10 @@
               <a href="ajoutEtudiant.php"><i class="fas fa-user-graduate"></i>Etudiant</a>
             </li>
             <li>
-              <a href="ajoutApprenant.php"><i class="fas fa-bed"></i>Chambre</a>
+              <a href="ajoutChambre.php"><i class="fas fa-bed"></i>Chambre</a>
             </li>
             <li>
-              <a href="ajoutApprenant.php"><i class="far fa-building"></i>Batiment</a>
+              <a href="ajoutBatiment.php"><i class="far fa-building"></i>Batiment</a>
             </li>
           </ul>
         </li>
@@ -24,13 +24,13 @@
           <a href="#"><i class="far fa-edit"></i> <span>Modifier</span></a>
           <ul class="nav-flyout">
           <li>
-              <a href="ajoutPromo.php"><i class="fas fa-user-graduate"></i>Etudiant</a>
+              <a href="modifEtudiant.php"><i class="fas fa-user-graduate"></i>Etudiant</a>
             </li>
             <li>
-              <a href="ajoutApprenant.php"><i class="fas fa-bed"></i>Chambre</a>
+              <a href="modifChambre.php"><i class="fas fa-bed"></i>Chambre</a>
             </li>
             <li>
-              <a href="ajoutApprenant.php"><i class="far fa-building"></i>Batiment</a>
+              <a href="modifBatiment.php"><i class="far fa-building"></i>Batiment</a>
             </li>
           </ul>
         </li>
@@ -38,19 +38,44 @@
           <a href="#"><i class="fas fa-list-ul"></i> <span>Lister</span></a>
           <ul class="nav-flyout">
           <li>
-              <a href="ajoutPromo.php"><i class="fas fa-user-graduate"></i>Etudiant</a>
+              <a href="listeEtudiants.php"><i class="fas fa-user-graduate"></i>Etudiant</a>
             </li>
             <li>
-              <a href="ajoutApprenant.php"><i class="fas fa-bed"></i>Chambre</a>
+              <a href="listeChambres.php"><i class="fas fa-bed"></i>Chambre</a>
             </li>
             <li>
-              <a href="ajoutApprenant.php"><i class="far fa-building"></i>Batiment</a>
+              <a href="listeBatiments.php"><i class="far fa-building"></i>Batiment</a>
+            </li>
+            <li>
+              <a href="listeBoursier.php"><i class="fas fa-coins"></i>Boursier</a>
+            </li>
+            <li>
+              <a href="listeLoge.php"><i class="fas fa-bed"></i>Logé</a>
+            </li>
+            <li>
+              <a href="listeNB.php"><i class="fas fa-user"></i>Non Boursier</a>
             </li>
           </ul>
         </li>
-        
         <li>
-          <a href="exclusion.php"><i class="fas fa-search"></i> <span class="">Rechercher Etudiant</span></a>
+          <a href="#"><i class="fas fa-search"></i> <span>Rechercher</span></a>
+          <ul class="nav-flyout">
+          <li>
+              <a href="rechercheEtudiants.php"><i class="fas fa-user-graduate"></i>Etudiant</a>
+            </li>
+            <li>
+              <a href="rechercheBoursier.php"><i class="fas fa-coins"></i>Boursier</a>
+            </li>
+            <li>
+              <a href="rechercheLoge.php"><i class="fas fa-bed"></i>Logé</a>
+            </li>
+            <li>
+              <a href="rechercheNB.php"><i class="fas fa-user"></i>Non Boursier</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="recherche.php"><i class="far fa-check-circle"></i><span class="">Check Statut</span></a>
         </li>
         <?php 
         if($_SESSION['profil']=="Administrateur"){?>
