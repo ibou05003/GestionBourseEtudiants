@@ -31,6 +31,14 @@ class Database
         $retour = self::$base->prepare($requete);
         $retour->execute($attribut);
     }
+    public static function executeUpdate1($requete, array $attribut)
+    {
+        self::$base->exec('SET CHARACTER SET URF8');
+        $retour = self::$base->prepare($requete);
+        $retour->execute($attribut);
+        
+        return $retour;
+    }
 }
 //executeSelect()
 //executeUpdate()

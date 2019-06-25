@@ -22,7 +22,7 @@ if (empty($_SESSION)) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/styleMenu.css">
       <link rel="stylesheet" href="../css/styleAcceuil.css">
-    <title>Check Statut</title>
+    <title>Statut</title>
 </head>
 <body>
     <?php include_once 'header.php'?>
@@ -32,27 +32,30 @@ if (empty($_SESSION)) {
                 <h1 class="titre">Verification Statut</h1>
             </div>
         </div>
-        <form class="form-inline col-12 offset-md-2 col-md-8" action="" method="GET">
-            <div class="input-group mb-3 col-12 col-md-12">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control mr-sm-3" name="recherche" type="search" value="<?php if(isset($_GET['recherche'])) echo $_GET['recherche'] ?>" required placeholder="Entrer un Matricule">
-                <button class="btn btn-outline-success my-2 my-sm-0" name="valider" type="submit">Search</button>
-            </div>
-        </form>
-        <div class="container">
-            <div class="row">
-            <?php 
-            if(isset($_GET['recherche'])){
-                Database::connect();
-                EtudiantService::checkStatut($_GET['recherche']);
+        <?php
+        require_once '../class/Autoloader.class.php';
+        Autoloader::register();
+        if (isset($_GET['recherche'])) 
+        {
+            $nom = $_GET['recherche'];
+            $f=fopen("nom.csv","w");
+            fputs($f,$nom);
+            fclose($f);
+        }
+        else
+        {
+            $f=fopen("nom.csv","r");
+            while($tab=fgetcsv($f,1000,";"))
+            {
+                $nom=$tab[0];
+                break;
             }
-                
-            
-            ?>
-            </div>
-        </div>
+            fclose($f);
+        }
+        EtudiantService::checkStatut('afficheRechVerif.php', $nom);
+
+        ?>
+    
     </div>
 
     

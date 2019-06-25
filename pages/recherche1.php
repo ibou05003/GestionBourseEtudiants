@@ -32,27 +32,24 @@ if (empty($_SESSION)) {
                 <h1 class="titre">Verification Statut</h1>
             </div>
         </div>
-        <form class="form-inline col-12 offset-md-2 col-md-8" action="" method="GET">
+        <form class="form-inline col-12 offset-md-2 col-md-8" action="afficheRechVerif.php" method="GET">
             <div class="input-group mb-3 col-12 col-md-12">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
                 </div>
-                <input class="form-control mr-sm-3" name="recherche" type="search" value="<?php if(isset($_GET['recherche'])) echo $_GET['recherche'] ?>" required placeholder="Entrer un Matricule">
+                <input class="form-control mr-sm-3" name="recherche" type="search" required placeholder="Entrer un Matricule">
+                <select class="custom-select custom-select-md">
+                    <option selected>Choisir un type</option>
+                    <option value="Boursier">Boursier</option>
+                    <option value="NonBoursier">Non Boursier</option>
+                    <option value="Loger">Logé</option>
+                    <option value="NonLoger">Non Logé</option>
+                </select>
                 <button class="btn btn-outline-success my-2 my-sm-0" name="valider" type="submit">Search</button>
             </div>
-        </form>
-        <div class="container">
-            <div class="row">
-            <?php 
-            if(isset($_GET['recherche'])){
-                Database::connect();
-                EtudiantService::checkStatut($_GET['recherche']);
-            }
-                
             
-            ?>
-            </div>
-        </div>
+        </form>
+    
     </div>
 
     

@@ -3,7 +3,7 @@ if (empty($_SESSION)) {
     session_start();
     if (!isset($_SESSION['profil'])) {
         header("location:../index.php");
-    }else{
+    } else {
         require_once '../class/Autoloader.class.php';
         Autoloader::register();
     }
@@ -96,12 +96,12 @@ if (empty($_SESSION)) {
                         <select class="custom-select" id="typeBourse" name="typeBourse">
                             <option selected>Choisir une Bourse</option>
                             <?php
-                                Database::connect();
-                                $retour=TypeBourse::selectType();
-                                while($data=$retour->fetch()){
-                                    echo "<option value=".$data['idType'].">".$data['libelle']." - montant : ".$data['montant']."</option>";
-                                }
-                            ?>
+Database::connect();
+$retour = TypeBourse::selectType();
+while ($data = $retour->fetch()) {
+    echo "<option value=" . $data['idType'] . ">" . $data['libelle'] . " - montant : " . $data['montant'] . "</option>";
+}
+?>
                         </select>
                     </div>
                     <div class="input-group mb-3 col-12 col-md-6" id="afficheNonBoursier">
@@ -129,12 +129,12 @@ if (empty($_SESSION)) {
                     <select class="custom-select" name="chambre" id="chambre">
                         <option selected>Choisir une Chambre</option>
                         <?php
-                            Database::connect();
-                            $retour=RequetesChambre::selectChambre();
-                            while($data=$retour->fetch()){
-                                echo "<option value=".$data['idChambre'].">".$data['nomChambre']." - n°: ".$data['num']." - Batiment : ".$data['bat']."</option>";
-                            }
-                        ?>
+Database::connect();
+$retour = RequetesChambre::selectChambre();
+while ($data = $retour->fetch()) {
+    echo "<option value=" . $data['idChambre'] . ">" . $data['nomChambre'] . " - n°: " . $data['num'] . " - Batiment : " . $data['bat'] . "</option>";
+}
+?>
                     </select>
                 </div>
             </div>
@@ -142,43 +142,47 @@ if (empty($_SESSION)) {
         <button type="submit" name="ajouter" class="btn btn-primary">Submit</button>
     </form>
     <?php
-        if(isset($_POST['ajouter'])){
-            $nom=$_POST['nom'];
-            $prenom=$_POST['prenom'];
-            $mail=$_POST['mail'];
-            $tel=$_POST['tel'];
-            $datenaiss=$_POST['dateNaiss'];
-            $bourse=$_POST['bourse'];
+if (isset($_POST['ajouter'])) {
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $mail = $_POST['mail'];
+    $tel = $_POST['tel'];
+    $datenaiss = $_POST['dateNaiss'];
+    $bourse = $_POST['bourse'];
+    $matricule = RequetesEtudiant::genereMatricule($nom, $prenom);
+    if (isset($_POST['typeBourse'])) {
+        $type = $_POST['typeBourse'];
+    }
 
-            if(isset($_POST['typeBourse']))
-                $type=$_POST['typeBourse'];
-            if(isset($_POST['adresse']))
-                $adresse=$_POST['adresse'];
-            if(isset($_POST['loger'])){
-                $loger=$_POST['loger'];
-                if($loger=="Loger"){
-                    $typeB=RequetesEtudiant::genereType($type);
-                    $etudiant=new Loger($matricule,$nom,$prenom,$mail,$tel,$datenaiss,$typeB,$chambre);
-                }
+    if (isset($_POST['adresse'])) {
+        $adresse = $_POST['adresse'];
+    }
+
+    if (isset($_POST['loger'])) {
+        $loger = $_POST['loger'];
+        if ($loger == "Loger") {
+            if (isset($_POST['chambre'])) {
+                $chambre = $_POST['chambre'];
+                $typeB = RequetesEtudiant::genereType($type);
+                $etudiant = new Loger($matricule, $nom, $prenom, $mail, $tel, $datenaiss, $typeB, $chambre);
             }
-                
-            if(isset($_POST['chambre']))
-                $chambre=$_POST['chambre'];
-            $matricule=RequetesEtudiant::genereMatricule($nom,$prenom);
-            //instanciation
-            //$et=new EtudiantService();
-            if($bourse=="Boursier"){
-                $typeB=RequetesEtudiant::genereType($type);
-                $etudiant=new Boursier($matricule,$nom,$prenom,$mail,$tel,$datenaiss,$typeB);
-            }elseif($bourse=="NonBoursier"){
-                $etudiant=new NonBoursier($matricule,$nom,$prenom,$mail,$tel,$datenaiss,$adresse);
-            }
-            EtudiantService::add($etudiant);
         }
-    ?>
+    }
+
+    //instanciation
+    //$et=new EtudiantService();
+    elseif ($bourse == "Boursier") {
+        $typeB = RequetesEtudiant::genereType($type);
+        $etudiant = new Boursier($matricule, $nom, $prenom, $mail, $tel, $datenaiss, $typeB);
+    } elseif ($bourse == "NonBoursier") {
+        $etudiant = new NonBoursier($matricule, $nom, $prenom, $mail, $tel, $datenaiss, $adresse);
+    }
+    EtudiantService::add($etudiant);
+}
+?>
     </div>
 
-    
+
     <script src="../js/jquery.js"></script>
     <script src="../js/form.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

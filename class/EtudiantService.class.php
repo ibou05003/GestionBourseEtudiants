@@ -16,6 +16,7 @@ class EtudiantService
         } elseif (get_class($etudiant) == 'Boursier' || get_class($etudiant) == 'Loger') {
             $idType = RequetesEtudiant::trouveType($etudiant->getBourse()->getLibelle());
             RequetesEtudiant::inserer('boursier', 'idType', $idType, $id);
+
             if (get_class($etudiant) == 'Loger') {
                 $chambre=$etudiant->getChambre();
                 RequetesEtudiant::inserer('loger', 'idChambre', $chambre, $id);
@@ -65,5 +66,12 @@ class EtudiantService
     public static function listeBatiment($page){
         $requete="SELECT * FROM batiment LIMIT ";
         RequetesBat::afficheBatiments($requete,$page,'batiment');
+    }
+    public static function checkStatut($recherche){
+        $requete1="SELECT DISTINCT * FROM etudiant,boursier,typeBourse,loger,chambre,batiment WHERE etudiant.idEtudiant=boursier.idEtudiant AND boursier.idEtudiant=loger.idEtudiant AND boursier.idType=typeBourse.idType AND loger.idchambre=chambre.idChambre AND chambre.idBat=batiment.idBat AND etudiant.matEtudiant=?";
+        $requete2="SELECT DISTINCT * FROM etudiant,boursier,typeBourse WHERE etudiant.idEtudiant=boursier.idEtudiant AND boursier.idType=typeBourse.idType AND etudiant.matEtudiant=?";
+        $requete3="SELECT DISTINCT * FROM etudiant,nonBoursier WHERE etudiant.idEtudiant=nonBoursier.idEtudiant AND etudiant.matEtudiant=?";
+        $requete4="SELECT DISTINCT * FROM etudiant,boursier,typeBourse WHERE etudiant.idEtudiant=boursier.idEtudiant AND boursier.idType=typeBourse.idType AND etudiant.matEtudiant=? AND NOT EXISTS (SELECT DISTINCT * FROM etudiant,boursier,loger WHERE etudiant.idEtudiant=boursier.idEtudiant AND boursier.idEtudiant=loger.idEtudiant AND etudiant.matEtudiant=?)";
+        RequetesEtudiant::afficheStatut($requete1,$requete2,$requete3,$requete4,$recherche);
     }
 }

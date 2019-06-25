@@ -393,9 +393,172 @@ class RequetesEtudiant
         }
         echo '</ul>';
     }
-    public static function checkStatut($recherche){
-        $requete="SELECT DISTINCT * FROM etudiant,boursier,typeBourse,loger,chambre,batiment WHERE etudiant.idEtudiant=boursier.idEtudiant AND boursier.idEtudiant=loger.idEtudiant AND boursier.idType=typeBourse.idType AND loger.idchambre=chambre.idChambre AND chambre.idBat=batiment.idBat AND (matEtudiant LIKE '%$recherche%' OR nomEtudiant LIKE '%$recherche%' OR prenomEtudiant LIKE '%$recherche%' OR mailEtudiant LIKE '%$recherche%' OR telEtudiant LIKE '%$recherche%' OR naissEtudiant LIKE '%$recherche%') LIMIT ";
+    //non logé
+    public static function afficheStatut($requete1,$requete2,$requete3,$requete4,$recherche){
         
+        //$sql="SELECT * FROM $table LIMIT ".(($pc-1)*$nbpp).",$nbpp";
+        //Database::connect();
+        $req1=Database::executeUpdate1($requete1,array($recherche));
+        $req2=Database::executeUpdate1($requete2,array($recherche));
+        $req3=Database::executeUpdate1($requete3,array($recherche));
+        $req4=Database::executeUpdate1($requete4,array($recherche,$recherche));
+        
+       $nb1=$req1->rowCount();
+        $nb2=$req2->rowCount();
+        $nb3=$req3->rowCount();
+        $nb4=$req4->rowCount();
+        if($nb1!=0 || $nb2!=0 || $nb3!=0 || $nb4!=0){
+            if($nb1!=0)
+            {
+                $req=$req1;
+                $statut='Boursier Et Logé';
+            }
+            elseif($nb2!=0)
+            {
+                $req=$req2;
+                $statut='Boursier';
+            }                
+            elseif($nb3!=0)
+            {
+                $req=$req3;
+                $statut='Non Boursier';
+            }
+                
+            elseif($nb4!=0)
+            {
+                $req=$req4;
+                $statut='Boursier Non Logé';
+            }
+            $data=$req->fetch();
+            ?>
+            <div class="container">
+                <div class="row">
+                <div class="input-group mb-3 col-12 col-md-6">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-graduate"></i></span>
+                    </div>
+                    <input type="text" name="nom" value="<?php echo $data['nomEtudiant'] ?>" class="form-control">
+                </div>
+                <div class="input-group mb-3 col-12 col-md-6">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-graduate"></i></span>
+                    </div>
+                    <input type="text" name="prenom" value="<?php echo $data['prenomEtudiant'] ?>" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group mb-3 col-12">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
+                    </div>
+                    <input type="email" name="mail" value="<?php echo $data['mailEtudiant'] ?>" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group mb-3 col-12 col-md-6">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-phone"></i></span>
+                    </div>
+                    <input type="number" name="tel" value="<?php echo $data['telEtudiant'] ?>" class="form-control">
+                </div>
+                <div class="input-group mb-3 col-12 col-md-6">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-calendar-alt"></i></span>
+                    </div>
+                    <input type="date" name="dateNaiss" value="<?php echo $data['naissEtudiant'] ?>" class="form-control">
+                </div>
+            </div>
+            <?php 
+                if($nb1!=0){
+                    ?>
+                    <div class="row">
+                        <div class="input-group mb-3 col-12 col-md-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-bed"></i></span>
+                            </div>
+                            <input type="text" name="statut" value="<?php echo $statut ?>" class="form-control">
+                        </div>
+                        <div class="input-group mb-3 col-12 col-md-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-coins"></i></span>
+                            </div>
+                            <input type="text" name="statut" value="<?php echo $data['libelle']." : ".$data['montant']."F" ?>" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group mb-3 col-12 col-md-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="far fa-building"></i></span>
+                            </div>
+                            <input type="text" name="statut" value="<?php echo "Batiment :".$data['nomBat'] ?>" class="form-control">
+                        </div>
+                        <div class="input-group mb-3 col-12 col-md-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-bed"></i></span>
+                            </div>
+                            <input type="text" name="statut" value="<?php echo "Chambre n°:".$data['num'] ?>" class="form-control">
+                        </div>
+                    </div>
+                    <?php 
+                }
+                elseif($nb2!=0){
+                    ?>
+                    <div class="row">
+                        <div class="input-group mb-3 col-12 col-md-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-coins"></i></span>
+                            </div>
+                            <input type="text" name="statut" value="<?php echo $statut ?>" class="form-control">
+                        </div>
+                        <div class="input-group mb-3 col-12 col-md-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-coins"></i></span>
+                            </div>
+                            <input type="text" name="statut" value="<?php echo $data['libelle']." : ".$data['montant']."F" ?>" class="form-control">
+                        </div>
+                    </div>
+                    <?php 
+                }
+                elseif($nb3!=0){
+                    ?>
+                    <div class="row">
+                        <div class="input-group mb-3 col-12 col-md-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-coins"></i></span>
+                            </div>
+                            <input type="text" name="statut" value="<?php echo $statut ?>" class="form-control">
+                        </div>
+                        <div class="input-group mb-3 col-12 col-md-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-map-marker-alt"></i></span>
+                            </div>
+                            <input type="text" name="statut" value="<?php echo $data['adresseNB'] ?>" class="form-control">
+                        </div>
+                    </div>
+                    <?php 
+                }
+                elseif($nb4!=0){
+                    ?>
+                    <div class="row">
+                        <div class="input-group mb-3 col-12 col-md-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-coins"></i></span>
+                            </div>
+                            <input type="text" name="statut" value="<?php echo $statut ?>" class="form-control">
+                        </div>
+                        <div class="input-group mb-3 col-12 col-md-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-coins"></i></span>
+                            </div>
+                            <input type="text" name="statut" value="<?php echo $data['libelle']." : ".$data['montant']."F" ?>" class="form-control">
+                        </div>
+                    </div>
+                    <?php 
+                }
+            ?>
+            </div>
+            <?php
+        }
     }
 }
 
