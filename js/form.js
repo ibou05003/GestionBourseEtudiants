@@ -4,6 +4,7 @@ $(document).ready(function() {
         $('#afficheBoursier').hide();
         $('#afficheNonBoursier').hide();
         $('#afficheLoger').hide();
+        $('#afficheBatiment').hide();
         $('#afficheChambre').hide();
     }
     cacheTout();
@@ -14,8 +15,14 @@ $(document).ready(function() {
             $('#afficheLoger').show();
             $('input[type=checkbox][name=loger]').change(function() {
                 if (this.checked) {
-                    $('#afficheChambre').show();
+                    $('#afficheBatiment').show();
+                    $('#batiment').change(function() {
+                        if (this.value != null) {
+                            $('#afficheChambre').show();
+                        }
+                    });
                 } else {
+                    $('#afficheBatiment').hide();
                     $('#afficheChambre').hide();
                 }
             });
