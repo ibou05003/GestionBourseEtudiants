@@ -70,7 +70,7 @@ if (empty($_SESSION)) {
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-calendar-alt"></i></span>
                 </div>
-                <input type="date" name="dateNaiss" class="form-control" value="<?php if(isset($_POST['dateNaisse'])) echo $_POST['dateNaisse'] ?>" placeholder="Entrer Date de Naissance">
+                <input type="date" name="dateNaiss" class="form-control" value="<?php if(isset($_POST['dateNaiss'])) echo $_POST['dateNaiss'] ?>" placeholder="Entrer Date de Naissance">
             </div>
         </div>
         <div class="row">
@@ -130,7 +130,7 @@ if (empty($_SESSION)) {
                     <div class="input-group-append">
                         <label class="input-group-text" for="batiment"><i class="far fa-building"></i></label>
                     </div>
-                    <select class="custom-select" name="batiment" id="batiment" onchange="this.form.submit();">
+                    <select class="custom-select" name="batiment" id="batiment">
                         <option selected>Choisir Un Batiment</option>
                         <?php
                             Database::connect();
