@@ -36,19 +36,22 @@ if (empty($_SESSION)) {
                 <h1 class="titre">AJOUT ETUDIANT</h1>
             </div>
         </div>
+        <div id="erreur">
+            <p>Vous n'avez pas rempli correctement les champs du formulaire !</p>
+        </div>
     <form action="" method="POST">
         <div class="row">
             <div class="input-group mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-graduate"></i></span>
                 </div>
-                <input type="text" name="nom" class="form-control" value="<?php if(isset($_POST['nom'])) echo $_POST['nom'] ?>" placeholder="Entrer le Nom">
+                <input type="text" id="nom" name="nom" class="form-control champ" value="<?php if(isset($_POST['nom'])) echo $_POST['nom'] ?>" placeholder="Entrer le Nom">
             </div>
             <div class="input-group mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-graduate"></i></span>
                 </div>
-                <input type="text" name="prenom" class="form-control" value="<?php if(isset($_POST['prenom'])) echo $_POST['prenom'] ?>" placeholder="Entrer le Prenom">
+                <input type="text" id="prenom" name="prenom" class="form-control champ" value="<?php if(isset($_POST['prenom'])) echo $_POST['prenom'] ?>" placeholder="Entrer le Prenom">
             </div>
         </div>
         <div class="row">
@@ -56,7 +59,7 @@ if (empty($_SESSION)) {
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
                 </div>
-                <input type="email" name="mail" class="form-control" value="<?php if(isset($_POST['mail'])) echo $_POST['mail'] ?>" placeholder="Entrer Email">
+                <input type="email" id="mail" name="mail" class="form-control" value="<?php if(isset($_POST['mail'])) echo $_POST['mail'] ?>" placeholder="Entrer Email">
             </div>
         </div>
         <div class="row">
@@ -64,16 +67,21 @@ if (empty($_SESSION)) {
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-phone"></i></span>
                 </div>
-                <input type="number" name="tel" min=300000000 value="<?php if(isset($_POST['tel'])) echo $_POST['tel'] ?>" class="form-control" placeholder="Entrer le Numéro de Téléphone">
+                <input type="number" id="tel" name="tel" min=300000000 value="<?php if(isset($_POST['tel'])) echo $_POST['tel'] ?>" class="form-control champ" placeholder="Entrer le Numéro de Téléphone">
             </div>
             <div class="input-group mb-3 col-12 col-md-6">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-calendar-alt"></i></span>
                 </div>
-                <input type="date" name="dateNaiss" class="form-control" value="<?php if(isset($_POST['dateNaiss'])) echo $_POST['dateNaiss'] ?>" placeholder="Entrer Date de Naissance">
+                <input type="date" id="dateNaiss" max= <?php echo date('Y-m-d'); ?> name="dateNaiss" class="form-control" value="<?php if(isset($_POST['dateNaiss'])) echo $_POST['dateNaiss'] ?>" placeholder="Entrer Date de Naissance">
             </div>
         </div>
         <div class="row">
+            <div class="row">
+            <div id="choixBourse">
+                <p>Vous devez choisir un type !</p>
+            </div>
+            </div>
             <div class="col-12 col-md-6">
                 <div class="form-check">
 <input class="form-check-input" type="radio" <?php if(isset($_POST['bourse'])&&$_POST['bourse']=='Boursier') { ?>checked <?php } ?> name="bourse" id="boursier" value="Boursier">
@@ -112,7 +120,7 @@ if (empty($_SESSION)) {
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-map-marker-alt"></i></span>
                         </div>
-                        <input type="text" name="adresse" class="form-control" value="<?php if(isset($_POST['adresse'])) echo $_POST['adresse'] ?>" placeholder="Entrer l'adresse">
+                        <input type="text" id="adresse" name="adresse" class="form-control champ" value="<?php if(isset($_POST['adresse'])) echo $_POST['adresse'] ?>" placeholder="Entrer l'adresse">
                     </div>
             </div>
             <div class="row">
@@ -163,7 +171,7 @@ if (empty($_SESSION)) {
                             <div class="input-group-append">
                             <label class="input-group-text" for="test"><i class="fas fa-bed"></i></label>
                              </div>
-                            <select class="custom-select" name="chambre">;
+                            <select class="custom-select" name="chambre" id="chambre">;
                             <?php
                                 foreach ($chambres as $idChambre => $num) {
                                     echo "<option value=" . $idChambre . ">" . $num . "</option>";
@@ -178,11 +186,11 @@ if (empty($_SESSION)) {
                 </div>
             </div>
         </div>
-        <button type="submit" name="ajouter" class="btn btn-primary">Ajouter</button>
+        <button type="submit" name="ajouter" id="ajouter" class="btn btn-primary">Ajouter</button>
     </form>
     <?php
 if (isset($_POST['ajouter'])) {
-    var_dump($_POST['chambre']);
+    //var_dump($_POST['chambre']);
     // $nom = $_POST['nom'];
     // $prenom = $_POST['prenom'];
     // $mail = $_POST['mail'];

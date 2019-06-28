@@ -1,6 +1,6 @@
 $(document).ready(function() {
     var chambres = {};
-    $('#afficheChambre .input-group').each(function() {
+    $('#AChambre .input-group').each(function() {
         var select = $(this);
         chambres[select.attr('id')] = select;
         select.remove();
@@ -46,19 +46,122 @@ $(document).ready(function() {
             $('#afficheNonBoursier').show();
         }
     });
-    // $(function() {
-    //     if ($('input[type=radio][name=bourse]').value == 'Boursier') {
+    var $nom = $('#nom'),
+        $prenom = $('#prenom'),
+        $mail = $('#mail'),
+        $tel = $('#tel'),
+        $dateNaiss = $('#dateNaiss'),
+        $boursier = $('#boursier'),
+        $nonboursier = $('#nonboursier'),
+        $adresse = $('#adresse'),
+        $type = $('#typeBourse'),
+        $batiment = $('#batiment'),
+        $chambre = $('#chambre'),
+        $loger = $('#loger'),
+        $erreur = $('#erreur'),
+        $choixBourse = $('#choixBourse'),
+        $envoi = $('#ajouter'),
+        $champ = $('.champ');
 
-    //         cacheTout();
-    //         $('#afficheBoursier').show();
-    //         $('#afficheLoger').show();
-    //         $('#afficheBatiment').show();
-    //         $('#afficheChambre').show();
-    //     }
-    //     // } else {
-    //     //     alert('test');
-    //     // }
-    // });
+    $erreur.css('display', 'none'); // on prend soin de cacher le message d'erreur
+    $choixBourse.css('display', 'none'); // on prend soin de cacher le message d'erreur
+
+    $champ.keyup(function() {
+        if ($(this).val().length < 2) { // si la chaîne de caractères est inférieure à 5
+            $(this).css({ // on rend le champ rouge
+                borderColor: 'red',
+                color: 'red'
+            });
+        } else {
+            $(this).css({ // si tout est bon, on le rend vert
+                borderColor: 'green',
+                color: 'green'
+            });
+        }
+    });
+
+    $mail.keyup(function() {
+        if (!$(this).val().match(/^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/)) { // verif mail
+            $(this).css({ // on rend le champ rouge
+                borderColor: 'red',
+                color: 'red'
+            });
+        } else {
+            $(this).css({ // si tout est bon, on le rend vert
+                borderColor: 'green',
+                color: 'green'
+            });
+        }
+    });
+
+    $tel.keyup(function() {
+        if ($(this).val().length < 9) { // si la confirmation est différente du mot de passe
+            $(this).css({ // on rend le champ rouge
+                borderColor: 'red',
+                color: 'red'
+            });
+        } else {
+            $(this).css({ // si tout est bon, on le rend vert
+                borderColor: 'green',
+                color: 'green'
+            });
+        }
+    });
+
+    $dateNaiss.keyup(function() {
+        if ($(this).val().length < 10) { // si la chaîne de caractères est inférieure à 5
+            $(this).css({ // on rend le champ rouge
+                borderColor: 'red',
+                color: 'red'
+            });
+        } else {
+            if ($(this).val().length < 8) { // si la chaîne de caractères est inférieure à 5
+                $(this).css({ // on rend le champ rouge
+                    borderColor: 'red',
+                    color: 'red'
+                });
+            } else {
+                $(this).css({ // si tout est bon, on le rend vert
+                    borderColor: 'green',
+                    color: 'green'
+                });
+            }
+
+        }
+    });
+
+    $envoi.click(function(e) {
+        e.preventDefault(); // on annule la fonction par défaut du bouton d'envoi
+
+        // puis on lance la fonction de vérification sur tous les champs :
+        verifier($nom);
+        verifier($prenom);
+        verifier($mail);
+        verifier($tel);
+        //verifier($dateNaiss);
+        verifierChoix();
+    });
+
+    function verifier(champ) {
+        if (champ.val() == "") { // si le champ est vide
+            $erreur.css('display', 'block'); // on affiche le message d'erreur
+            champ.css({ // on rend le champ rouge
+                borderColor: 'red',
+                color: 'red'
+            });
+        }
+    }
+
+    function verifierChoix() {
+        if ($boursier.val() == "" && $nonboursier.val() == "") { // si le champ est vide
+            $choixBourse.css('display', 'block'); // on affiche le message d'erreur
+            champ.css({ // on rend le champ rouge
+                borderColor: 'red',
+                color: 'red'
+            });
+        }
+    }
+
     // $(function() {
     //     if ($('input[type=radio][name=bourse]').is(':checked') === true) {
     //         if (this.value == 'Boursier') {
