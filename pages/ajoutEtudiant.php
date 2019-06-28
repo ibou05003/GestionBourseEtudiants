@@ -130,40 +130,59 @@ if (empty($_SESSION)) {
                     <div class="input-group-append">
                         <label class="input-group-text" for="batiment"><i class="far fa-building"></i></label>
                     </div>
-                    <select class="custom-select" name="batiment" id="batiment">
-                        <option selected>Choisir Un Batiment</option>
+                   
                         <?php
-                            Database::connect();
-                            $retour = RequetesChambre::selectBat();
-                            while ($data = $retour->fetch()) {
+                        Database::connect();
+                            $batiments = RequetesChambre::selectBat();
+                            $chambres=Database::$base->query('SELECT * FROM chambre ORDER BY idBat ASC');
+                            $chambresParBat=array();
+                            while($chambre=$chambres->fetch()){
+                                $chambresParBat[$chambre['idBat']][$chambre['idChambre']]=$chambre['nomChambre']." - n° ".$chambre['num'];
+                            }
+                            ?>
+                         <select class="custom-select" name="batiment" id="batiment">
+                         <option value="0">Choisir Un Batiment</option>
+                        <?php
+                            
+                            while ($data = $batiments->fetch()) {
                                 echo "<option value=" . $data['idBat'] . ">" . $data['nomBat'] . "</option>";
                             }
                         ?>
                     </select>
                 </div>
             </div>
-            <div class="row">
-                <div class="input-group mb-3 col-12 col-md-6" id="afficheChambre">
-                    <div class="input-group-append">
-                        <label class="input-group-text" for="chambre"><i class="fas fa-bed"></i></label>
-                    </div>
-                    <select class="custom-select" name="chambre" id="chambre">
-                        <option selected>Choisir une Chambre</option>
+            <div class="row" id="afficheChambre">
+                <div class="input-group mb-3 col-12 col-md-6" id="AChambre">
+                    
+                    
                         <?php
-                            //Database::connect();
-                            $retour = RequetesChambre::selectChambre();
-                            while ($data = $retour->fetch()) {
-                                echo "<option value=" . $data['idChambre'] . ">" . $data['nomChambre'] . " - n°: " . $data['num'] . " - Batiment : " . $data['bat'] . "</option>";
-                            }
+                        
+                           foreach ($chambresParBat as $idBat=>$chambres) { 
                         ?>
-                    </select>
+                        <div class="input-group" id="batiment-<?= $idBat; ?>">
+                            <div class="input-group-append">
+                            <label class="input-group-text" for="test"><i class="fas fa-bed"></i></label>
+                             </div>
+                            <select class="custom-select" name="chambre">;
+                            <?php
+                                foreach ($chambres as $idChambre => $num) {
+                                    echo "<option value=" . $idChambre . ">" . $num . "</option>";
+                                }
+                            ?>
+                            </select>
+                        </div>
+                            <?php
+                           }
+                        ?>
+                    
                 </div>
             </div>
         </div>
-        <button type="submit" name="ajouter" class="btn btn-primary">Submit</button>
+        <button type="submit" name="ajouter" class="btn btn-primary">Ajouter</button>
     </form>
     <?php
 if (isset($_POST['ajouter'])) {
+    var_dump($_POST['chambre']);
     // $nom = $_POST['nom'];
     // $prenom = $_POST['prenom'];
     // $mail = $_POST['mail'];
