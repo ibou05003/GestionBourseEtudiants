@@ -54,17 +54,21 @@ $(document).ready(function() {
         $boursier = $('#boursier'),
         $nonboursier = $('#nonboursier'),
         $adresse = $('#adresse'),
-        $type = $('#typeBourse'),
+        $type = $('#typeBourse option:selected'),
         $batiment = $('#batiment'),
         $chambre = $('#chambre'),
         $loger = $('#loger'),
         $erreur = $('#erreur'),
         $choixBourse = $('#choixBourse'),
         $envoi = $('#ajouter'),
+        $age = $('#age'),
+        $montant = $('#montant'),
         $champ = $('.champ');
 
     $erreur.css('display', 'none'); // on prend soin de cacher le message d'erreur
     $choixBourse.css('display', 'none'); // on prend soin de cacher le message d'erreur
+    $age.css('display', 'none'); // on prend soin de cacher le message d'erreur
+    $montant.css('display', 'none'); // on prend soin de cacher le message d'erreur
 
     $champ.keyup(function() {
         if ($(this).val().length < 2) { // si la chaîne de caractères est inférieure à 5
@@ -115,12 +119,21 @@ $(document).ready(function() {
                 color: 'red'
             });
         } else {
-            if ($(this).val().length < 8) { // si la chaîne de caractères est inférieure à 5
+            //alert($(this).val());
+            var maintenant = new Date();
+            //alert(maintenant);
+            var maDateNaissance = new Date($(this).val());
+            //alert(maDateNaissance.getFulllYear());
+            var age = maintenant.getFullYear() - maDateNaissance.getFullYear();
+            //alert(age);
+            if (age > 30 || age < 18) { // si la chaîne de caractères est inférieure à 5
+                $age.css('display', 'block'); // on affiche le message d'erreur
                 $(this).css({ // on rend le champ rouge
                     borderColor: 'red',
                     color: 'red'
                 });
             } else {
+                $age.css('display', 'none'); // on prend soin de cacher le message d'erreur
                 $(this).css({ // si tout est bon, on le rend vert
                     borderColor: 'green',
                     color: 'green'
@@ -138,8 +151,32 @@ $(document).ready(function() {
         verifier($prenom);
         verifier($mail);
         verifier($tel);
-        //verifier($dateNaiss);
+        verifier($dateNaiss);
         verifierChoix();
+        if ($('input[type=radio][name=bourse]').is(':checked') === true) {
+            if ($('input[type=radio][name=bourse]').val() == 'Boursier') {
+                if ($type.val() == 0) {
+                    //alert('ok');
+                    $montant.css('display', 'block'); // on affiche le message d'erreur
+                    $type.css({ // on rend le champ rouge
+                        borderColor: 'red',
+                        color: 'red'
+                    });
+                } else {
+                    $montant.css('display', 'none'); // on prend soin de cacher le message d'erreur
+                }
+                if ($('input[type=checkbox][name=loger]').is(':checked') === true) {
+                    if ($batiment.val() == 0) {
+                        $(this).css({ // on rend le champ rouge
+                            borderColor: 'red',
+                            color: 'red'
+                        });
+                    }
+                }
+            } else {
+                verifier($adresse);
+            }
+        }
     });
 
     function verifier(champ) {
@@ -153,12 +190,14 @@ $(document).ready(function() {
     }
 
     function verifierChoix() {
-        if ($boursier.val() == "" && $nonboursier.val() == "") { // si le champ est vide
+        if ($('input[type=radio][name=bourse]').is(':checked') === false) { // si le champ est vide
             $choixBourse.css('display', 'block'); // on affiche le message d'erreur
-            champ.css({ // on rend le champ rouge
+            $(this).css({ // on rend le champ rouge
                 borderColor: 'red',
                 color: 'red'
             });
+        } else {
+            $choixBourse.css('display', 'none'); // on prend soin de cacher le message d'erreur
         }
     }
 

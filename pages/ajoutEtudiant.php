@@ -74,14 +74,12 @@ if (empty($_SESSION)) {
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-calendar-alt"></i></span>
                 </div>
                 <input type="date" id="dateNaiss" max= <?php echo date('Y-m-d'); ?> name="dateNaiss" class="form-control" value="<?php if(isset($_POST['dateNaiss'])) echo $_POST['dateNaiss'] ?>" placeholder="Entrer Date de Naissance">
+                
             </div>
+            <span id="age">L'âge doit être compris entre 18 et 30 ans </span>
         </div>
         <div class="row">
-            <div class="row">
-            <div id="choixBourse">
-                <p>Vous devez choisir un type !</p>
-            </div>
-            </div>
+            
             <div class="col-12 col-md-6">
                 <div class="form-check">
 <input class="form-check-input" type="radio" <?php if(isset($_POST['bourse'])&&$_POST['bourse']=='Boursier') { ?>checked <?php } ?> name="bourse" id="boursier" value="Boursier">
@@ -98,6 +96,7 @@ if (empty($_SESSION)) {
                     </label>
                 </div>
             </div>
+            <span id="choixBourse">Vous devez choisir un type !</span>
         </div>
         <div class="cacher" id="cacher">
             <div class="row">
@@ -106,7 +105,7 @@ if (empty($_SESSION)) {
                             <label class="input-group-text" for="typeBourse"><i class="fas fa-coins"></i></label>
                         </div>
                         <select class="custom-select" id="typeBourse" name="typeBourse">
-                            <option selected>Choisir une Bourse</option>
+                            <option value="0">Choisir une Bourse</option>
                             <?php
                                 Database::connect();
                                 $retour = TypeBourse::selectType();
@@ -116,6 +115,7 @@ if (empty($_SESSION)) {
                             ?>
                         </select>
                     </div>
+                    <span id="montant">Selectionnez un type de bourse </span>
                     <div class="input-group mb-3 col-12 col-md-6" id="afficheNonBoursier">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-map-marker-alt"></i></span>
