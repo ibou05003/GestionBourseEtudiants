@@ -115,7 +115,7 @@ if (empty($_SESSION)) {
                             ?>
                         </select>
                     </div>
-                    <span id="montant">Selectionnez un type de bourse </span>
+                    <span id="montant">Vous devez Selectionner un type de bourse </span>
                     <div class="input-group mb-3 col-12 col-md-6" id="afficheNonBoursier">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-map-marker-alt"></i></span>
@@ -157,6 +157,7 @@ if (empty($_SESSION)) {
                             }
                         ?>
                     </select>
+                    <span id="bat">Vous devez Selectionner un batiment </span>
                 </div>
             </div>
             <div class="row" id="afficheChambre">
@@ -191,41 +192,41 @@ if (empty($_SESSION)) {
     <?php
 if (isset($_POST['ajouter'])) {
     //var_dump($_POST['chambre']);
-    // $nom = $_POST['nom'];
-    // $prenom = $_POST['prenom'];
-    // $mail = $_POST['mail'];
-    // $tel = $_POST['tel'];
-    // $datenaiss = $_POST['dateNaiss'];
-    // $bourse = $_POST['bourse'];
-    // $matricule = RequetesEtudiant::genereMatricule($nom, $prenom);
-    // if (isset($_POST['typeBourse'])) {
-    //     $type = $_POST['typeBourse'];
-    // }
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $mail = $_POST['mail'];
+    $tel = $_POST['tel'];
+    $datenaiss = $_POST['dateNaiss'];
+    $bourse = $_POST['bourse'];
+    $matricule = RequetesEtudiant::genereMatricule($nom, $prenom);
+    if (isset($_POST['typeBourse'])) {
+        $type = $_POST['typeBourse'];
+    }
 
-    // if (isset($_POST['adresse'])) {
-    //     $adresse = $_POST['adresse'];
-    // }
+    if (isset($_POST['adresse'])) {
+        $adresse = $_POST['adresse'];
+    }
 
-    // if (isset($_POST['loger'])) {
-    //     $loger = $_POST['loger'];
-    //     if ($loger == "Loger") {
-    //         if (isset($_POST['chambre'])) {
-    //             $chambre = $_POST['chambre'];
-    //             $typeB = RequetesEtudiant::genereType($type);
-    //             $etudiant = new Loger($matricule, $nom, $prenom, $mail, $tel, $datenaiss, $typeB, $chambre);
-    //         }
-    //     }
-    // }
+    if (isset($_POST['loger'])) {
+        $loger = $_POST['loger'];
+        if ($loger == "Loger") {
+            if (isset($_POST['chambre'])) {
+                $chambre = $_POST['chambre'];
+                $typeB = RequetesEtudiant::genereType($type);
+                $etudiant = new Loger($matricule, $nom, $prenom, $mail, $tel, $datenaiss, $typeB, $chambre);
+            }
+        }
+    }
 
-    // //instanciation
-    // //$et=new EtudiantService();
-    // elseif ($bourse == "Boursier") {
-    //     $typeB = RequetesEtudiant::genereType($type);
-    //     $etudiant = new Boursier($matricule, $nom, $prenom, $mail, $tel, $datenaiss, $typeB);
-    // } elseif ($bourse == "NonBoursier") {
-    //     $etudiant = new NonBoursier($matricule, $nom, $prenom, $mail, $tel, $datenaiss, $adresse);
-    // }
-    // EtudiantService::add($etudiant);
+    //instanciation
+    //$et=new EtudiantService();
+    elseif ($bourse == "Boursier") {
+        $typeB = RequetesEtudiant::genereType($type);
+        $etudiant = new Boursier($matricule, $nom, $prenom, $mail, $tel, $datenaiss, $typeB);
+    } elseif ($bourse == "NonBoursier") {
+        $etudiant = new NonBoursier($matricule, $nom, $prenom, $mail, $tel, $datenaiss, $adresse);
+    }
+    EtudiantService::add($etudiant);
 }
 ?>
     </div>

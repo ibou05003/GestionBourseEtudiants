@@ -54,10 +54,10 @@ $(document).ready(function() {
         $boursier = $('#boursier'),
         $nonboursier = $('#nonboursier'),
         $adresse = $('#adresse'),
-        $type = $('#typeBourse option:selected'),
+        $type = $('#typeBourse'),
         $batiment = $('#batiment'),
         $chambre = $('#chambre'),
-        $loger = $('#loger'),
+        $bat = $('#bat'),
         $erreur = $('#erreur'),
         $choixBourse = $('#choixBourse'),
         $envoi = $('#ajouter'),
@@ -69,6 +69,7 @@ $(document).ready(function() {
     $choixBourse.css('display', 'none'); // on prend soin de cacher le message d'erreur
     $age.css('display', 'none'); // on prend soin de cacher le message d'erreur
     $montant.css('display', 'none'); // on prend soin de cacher le message d'erreur
+    $bat.css('display', 'none'); // on prend soin de cacher le message d'erreur
 
     $champ.keyup(function() {
         if ($(this).val().length < 2) { // si la chaîne de caractères est inférieure à 5
@@ -144,39 +145,53 @@ $(document).ready(function() {
     });
 
     $envoi.click(function(e) {
-        e.preventDefault(); // on annule la fonction par défaut du bouton d'envoi
+        var valid = true;
 
         // puis on lance la fonction de vérification sur tous les champs :
-        verifier($nom);
-        verifier($prenom);
-        verifier($mail);
-        verifier($tel);
-        verifier($dateNaiss);
-        verifierChoix();
+        valid = verifier($nom);
+        valid = verifier($prenom);
+        valid = verifier($mail);
+        valid = verifier($tel);
+        valid = verifier($dateNaiss);
+        valid = verifierChoix();
         if ($('input[type=radio][name=bourse]').is(':checked') === true) {
-            if ($('input[type=radio][name=bourse]').val() == 'Boursier') {
+            if ($('input[type=radio][name=bourse] :checked').val() == 'Boursier') {
                 if ($type.val() == 0) {
                     //alert('ok');
+                    valid = false;
                     $montant.css('display', 'block'); // on affiche le message d'erreur
-                    $type.css({ // on rend le champ rouge
-                        borderColor: 'red',
-                        color: 'red'
-                    });
+                    // $type.css({ // on rend le champ rouge
+                    //     borderColor: 'red',
+                    //     color: 'red'
+                    // });
+                    // $type.change(function() {
+                    //     alert('ok');
+                    //     if ($type.val() != 0) {
+                    //         alert('ok');
+                    //         $montant.css('display', 'none'); // on prend soin de cacher le message d'erreur
+                    //     }
+                    // });
                 } else {
+                    //alert('ok');
                     $montant.css('display', 'none'); // on prend soin de cacher le message d'erreur
                 }
                 if ($('input[type=checkbox][name=loger]').is(':checked') === true) {
                     if ($batiment.val() == 0) {
-                        $(this).css({ // on rend le champ rouge
-                            borderColor: 'red',
-                            color: 'red'
-                        });
+                        valid = false;
+                        $bat.css('display', 'block'); // on affiche le message d'erreur
+                        // $(this).css({ // on rend le champ rouge
+                        //     borderColor: 'red',
+                        //     color: 'red'
+                        // });
+                    } else {
+                        $bat.css('display', 'none'); // on prend soin de cacher le message d'erreur
                     }
                 }
             } else {
-                verifier($adresse);
+                valid = verifier($adresse);
             }
         }
+        return valid;
     });
 
     function verifier(champ) {
@@ -186,7 +201,9 @@ $(document).ready(function() {
                 borderColor: 'red',
                 color: 'red'
             });
+            return false;
         }
+        return true;
     }
 
     function verifierChoix() {
@@ -196,8 +213,10 @@ $(document).ready(function() {
                 borderColor: 'red',
                 color: 'red'
             });
+            return false;
         } else {
             $choixBourse.css('display', 'none'); // on prend soin de cacher le message d'erreur
+            return true;
         }
     }
 
