@@ -220,17 +220,17 @@ $(document).ready(function() {
         }
     }
 
-    // $(function() {
-    //     if ($('input[type=radio][name=bourse]').is(':checked') === true) {
-    //         if (this.value == 'Boursier') {
-    //             //cacheTout();
-    //             $('#afficheBoursier').show();
-    //             $('#afficheLoger').show();
-    //             $('#afficheBatiment').show();
-    //             $('#afficheChambre').show();
-    //         }
-    //     } else {
-    //         alert('test');
-    //     }
+    //$(document).ready(function() {
+    //if ($('input[type=radio][name=bourse]').is(':checked') === true) {
+    if ($('input[type=radio][name=bourse] :checked').val() == 'Boursier') {
+        //cacheTout();
+        $('#afficheBoursier').show();
+        $('#afficheLoger').show();
+        $('#afficheBatiment').show();
+        $('#afficheChambre').show();
+    }
+    // } else {
+    //     alert('test');
+    // }
     // });
 });
