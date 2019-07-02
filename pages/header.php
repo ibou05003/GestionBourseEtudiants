@@ -21,18 +21,8 @@
           </ul>
         </li>
         <li>
-          <a href="#"><i class="far fa-edit"></i> <span>Modifier</span></a>
-          <ul class="nav-flyout">
-          <li>
-              <a href="modifEtudiant.php"><i class="fas fa-user-graduate"></i>Etudiant</a>
-            </li>
-            <li>
-              <a href="modifChambre.php"><i class="fas fa-bed"></i>Chambre</a>
-            </li>
-            <li>
-              <a href="modifBatiment.php"><i class="far fa-building"></i>Batiment</a>
-            </li>
-          </ul>
+          <a href="modifEtudiant.php"><i class="far fa-edit"></i> <span>Modifier Etudiant</span></a>
+          
         </li>
         <li>
           <a href="#"><i class="fas fa-list-ul"></i> <span>Lister</span></a>
@@ -77,30 +67,9 @@
         <li>
           <a href="recherche.php"><i class="far fa-check-circle"></i><span class="">Check Statut</span></a>
         </li>
-        <?php 
-        if($_SESSION['profil']=="Administrateur"){?>
-          <li>
-          <a href="#"><i class="fas fa-user"></i> <span>Users</span></a>
-          <ul class="nav-flyout">
-            <li>
-              <a href="ajoutUser.php"><i class="fas fa-user-plus"></i>Ajouter</a>
-            </li>
-            <li>
-              <a href="listeUser.php"><i class="fas fa-list-ul"></i>Lister</a>
-            </li>
-            <li>
-              <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
-            </li>
-          </ul>
+        <li>
+            <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
         </li>
-        <?php
-        }
-        else{ ?>
-          <li>
-              <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Deconnexion</a>
-            </li><?php
-        }
-        ?>
         
       </ul>
     </nav>

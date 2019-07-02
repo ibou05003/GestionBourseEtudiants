@@ -222,12 +222,30 @@ $(document).ready(function() {
 
     //$(document).ready(function() {
     //if ($('input[type=radio][name=bourse]').is(':checked') === true) {
-    if ($('input[type=radio][name=bourse] :checked').val() == 'Boursier') {
-        //cacheTout();
+    // if ($('input[type=radio][name=bourse] :checked').val() == 'Boursier') {
+    //     //cacheTout();
+    //     $('#afficheBoursier').show();
+    //     $('#afficheLoger').show();
+    //     $('#afficheBatiment').show();
+    //     $('#afficheChambre').show();
+    // }
+    var boursier = document.getElementById('boursier');
+    var nonboursier = document.getElementById('nonboursier');
+    var batiment = document.getElementById('batiment');
+    if (boursier.checked) {
         $('#afficheBoursier').show();
         $('#afficheLoger').show();
         $('#afficheBatiment').show();
         $('#afficheChambre').show();
+    }
+    if (nonboursier.checked) {
+        cacheTout();
+        $('#afficheNonBoursier').show();
+    }
+    if (batiment.selected) {
+        $('#afficheChambre').show();
+        var idBat = $(this).val();
+        $('#AChambre').empty().append(chambres['batiment-' + idBat]);
     }
     // } else {
     //     alert('test');
